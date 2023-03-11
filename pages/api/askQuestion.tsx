@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { adminDb } from "../../firebaseAdmin";
 import admin from "firebase-admin";
 import query from "../../lib/queryApi";
+import queryTurbo from "../../lib/queryApiTurbo";
 
 type Data = {
   answer: string;
@@ -25,7 +26,14 @@ export default async function handler(
   }
 
   // ChatGPT query
-  const response = await query(prompt, chatId, model);
+  // const response = await query(prompt, chatId, model);
+
+  let response;
+
+  // Use newest ChatGPT 3.5 turbo if model is gpt-3.5-turbo
+  model === "gpt-3.5-turbo"
+    ? (response = await queryTurbo(prompt, chatId, model))
+    : (response = await query(prompt, chatId, model));
 
   const message: Message = {
     text: response || "ChatGPT was unable to find an answer for that!",
