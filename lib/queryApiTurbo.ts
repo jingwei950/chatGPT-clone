@@ -1,5 +1,6 @@
 import openai from "./chatgpt";
 
+// For gpt-3.5-turbo model
 const queryTurbo = async (prompt: string, chatId: string, model: string) => {
   const res = await openai
     .createChatCompletion({
