@@ -6,6 +6,8 @@ type Props = {
   message: DocumentData;
 };
 
+// test
+
 function Message({ message }: Props) {
   const isChatGPT = message.user.name === "ChatGPT";
   return (
